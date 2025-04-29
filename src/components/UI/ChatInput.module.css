@@ -1,0 +1,33 @@
+.chatSection {
+  position: fixed;
+  bottom: 35px;
+  position: absolute;
+  width: 95%;
+  display: flex;
+  gap: 10px;
+}
+
+.inputField {
+  width: 100%;
+  border: 1px solid grey;
+  border-radius: 20px;
+  outline: none;
+  padding: 15px 10px;
+  visibility: inherit;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: larger;
+}
+
+.sendBtn {
+  background: url("https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Telegram_2019_Logo.svg/1200px-Telegram_2019_Logo.svg.png")
+    center center / cover no-repeat;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}

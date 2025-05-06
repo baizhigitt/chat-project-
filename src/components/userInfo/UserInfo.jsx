@@ -1,17 +1,29 @@
 import React from "react";
-import userInfoStyle from "./Userinfo.module.css";
-const { headerContainer } = userInfoStyle;
+
+import styled from "styled-components";
 
 export const UserInfo = ({ nameUserInfo }) => {
   return (
     <div>
-      <div className={headerContainer}>
+      <HeaderStyle>
         <header>
           <div>
             <p>{nameUserInfo}</p>
           </div>
         </header>
-      </div>
+      </HeaderStyle>
     </div>
   );
 };
+
+const HeaderStyle = styled.div`
+  width: 100%;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  min-height: 50px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: larger;
+`;

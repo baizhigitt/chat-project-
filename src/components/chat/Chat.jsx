@@ -1,4 +1,5 @@
-import React from "react";
+// import React from "react";
+import { memo } from "react";
 
 import { createGlobalStyle, styled } from "styled-components";
 
@@ -18,7 +19,7 @@ export const Chat = ({ messages, onDelete, onReadMessages }) => {
   );
 };
 
-const ChatItem = ({ text, time, onDelete, id, read, onReadMessages }) => {
+const ChatItem = memo(({ text, time, onDelete, id, read, onReadMessages }) => {
   const currentTime = new Date(time).toLocaleTimeString("ru-RU", {
     hour: "2-digit",
     minute: "2-digit",
@@ -42,7 +43,7 @@ const ChatItem = ({ text, time, onDelete, id, read, onReadMessages }) => {
       <ChatButton onClick={() => onDelete(id)}></ChatButton>
     </ChatContainer>
   );
-};
+});
 
 // styled-components
 const GlobalStyle = createGlobalStyle`

@@ -1,8 +1,14 @@
 import { Chat } from "./components/chat/Chat";
 import { ChatInput } from "./components/UI/ChatInput";
 import { UserInfo } from "./components/userInfo/UserInfo";
+import {
+  deleteMessages,
+  fetchMessages,
+  updateMessagePatch,
+  postMessage,
+} from "./api/Api";
 
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 
 const CONVERSATION = [
@@ -17,27 +23,50 @@ const CONVERSATION = [
 export const App = () => {
   const [messages, setMessages] = useState(CONVERSATION);
 
-  const transferArray = (transferMessages) => {
-    setMessages((prev) => {
-      return [...prev, transferMessages];
-    });
-  };
+  useEffect(() => {
+    const loadMessages = async () => {
+      const data = await fetchMessages();
+      const sorted = data.sort((a, b) => new Date(a.time) - new Date(b.time));
+      setMessages(sorted);
+    };
+    loadMessages();
+  }, []);
 
-  const deleteMessage = (id) => {
-    setMessages((prev) => prev.filter((item) => item.id !== id));
-  };
+  const transferArray = useCallback(
+    async (newMessage) => {
+      const savedMessage = await postMessage(newMessage);
+      setMessages((prev) => [...prev, savedMessage]);
+    },
+    [setMessages]
+  );
 
-  const removeAllMessages = () => {
+  const deleteMessage = useCallback(
+    async (id) => {
+      await deleteMessages(id);
+      setMessages((prev) => prev.filter((item) => item.id !== id));
+    },
+    [setMessages]
+  );
+
+  const removeAllMessages = useCallback(() => {
     setMessages([]);
-  };
+  }, []);
 
-  const isReadMessages = (id) => {
-    setMessages((prev) => {
-      return prev.map((item) =>
+  const isReadMessages = useCallback(
+    async (id) => {
+      const updatedMessages = messages.map((item) =>
         item.id === id ? { ...item, read: !item.read } : item
       );
-    });
-  };
+      setMessages(updatedMessages);
+
+      const currentMessage = messages.find((item) => item.id === id);
+
+      if (currentMessage) {
+        await updateMessagePatch(id, { read: !currentMessage.read });
+      }
+    },
+    [messages]
+  );
 
   return (
     <div>

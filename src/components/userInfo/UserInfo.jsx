@@ -1,8 +1,8 @@
-import React from "react";
-
+// import React from "react";
+import { memo } from "react";
 import styled from "styled-components";
 
-export const UserInfo = ({ nameUserInfo }) => {
+export const UserInfo = memo(({ nameUserInfo }) => {
   return (
     <div>
       <HeaderStyle>
@@ -14,7 +14,7 @@ export const UserInfo = ({ nameUserInfo }) => {
       </HeaderStyle>
     </div>
   );
-};
+});
 
 const HeaderStyle = styled.div`
   width: 100%;
